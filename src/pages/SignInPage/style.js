@@ -20,3 +20,7 @@ export const WrapperContainerRight= styled.div`
     color: blue;
     font-weight: 500;
 `
+export const WrapperLeftFinal= styled.div`
+    // margin-top: 20px;
+    text-align: center;
+`

@@ -1,11 +1,11 @@
 import React from "react";
 import {Input} from "antd";
-import { useState } from "react";
+// import { useState } from "react";
 
-function InputForm({placeholder , ...rest}) {
-    const [valueInput, setValueInput]= useState('');
+function InputForm(props) {
+    const {placeholder , ...rest}= props;
     return ( 
-        <Input valueInput={valueInput}  placeholder={placeholder} style={{margin: '10px 0'}} {...rest}/>
+        <Input  placeholder={placeholder}  {...rest} style={{margin: '5px 0'}}/>
     );
 }
 
