@@ -16,7 +16,6 @@ function App() {
   const dispatch = useDispatch();
   useEffect(async () => {
     const { decoded, storageData } = await handleDecode();
-    console.log('storageData', storageData);
     if (decoded?.id) {
       handleGetDatailsUser(decoded?.id, storageData);
     }
@@ -35,7 +34,9 @@ function App() {
 
   UserService.axiosJWT.interceptors.request.use(async (config) => {
     const currentTime= new Date()
-    const {decoded} = handleDecode();
+    const {decoded} = await handleDecode();
+    console.log('decoded', decoded);
+    console.log(currentTime.getTime());
     if(decoded?.exp < currentTime.getTime() / 1000){
       const data = await UserService.refreshToken()
       config.headers['token']= `Bearer ${data?.access_token}`;
