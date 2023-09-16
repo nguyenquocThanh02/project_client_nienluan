@@ -1,30 +1,50 @@
 import React from "react";
-import {Badge, Col, Input as Search} from 'antd';
+import {Badge, Col, Input as Search, Popover} from 'antd';
 import {
     WrapperHeader, WrapperTextHeader,
-    WrapperHeaderAccount,
+    WrapperHeaderAccount, WrapperHeaderPop,
+    WrapperTextContact
 } from './style';
 import {
-    UserDeleteOutlined,
-    CaretDownOutlined,
-    ShoppingCartOutlined
+    UserOutlined,
+    ShoppingCartOutlined, WechatOutlined
   } from '@ant-design/icons';
 import ButtonInputSearch from "../ButtonInputSearch/ButtonInputSearch";
 import { useNavigate } from "react-router-dom";
-import {useSelector} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux';
+import * as UserService from '../../services/UserService';
+import { resetUser } from "../../redux/slides/userSlide";
 
 function HeaderComponent() {
     const navigate= useNavigate()
     const user= useSelector((state)=>state.user)
+    const dispatch= useDispatch();
     const handleNavigateLogin = ()=>{
         navigate('/sign-in')
     }
-    console.log('user', user)
+    // console.log('user', user)
+    const handleLogout = async ()=>{
+        await UserService.logoutUser();
+        dispatch(resetUser())
+    }
+    const content = (
+        <div>
+          {
+            user?.isAdmin && <WrapperHeaderPop onClick={()=> navigate('/system/admin')}>Trang quản trị</WrapperHeaderPop>
+          }
+          <WrapperHeaderPop>Xem hồ sơ</WrapperHeaderPop>
+          <WrapperHeaderPop onClick={handleLogout}>Đăng xuất</WrapperHeaderPop>
+        </div>
+      );
     return ( 
         <div>
            <WrapperHeader gutter={16}>
-            <Col span={5}>
-                <WrapperTextHeader>Logo</WrapperTextHeader>
+            <Col span={5} style={{gap: '30px', display: 'flex', alignItems: 'center'}}>
+                <WrapperTextHeader onClick={()=>navigate('/')}>LOGO</WrapperTextHeader>
+                <WrapperHeaderAccount>
+                    <WechatOutlined style={{fontSize: '30px'}}/>
+                    Liên hệ
+                </WrapperHeaderAccount>
             </Col>
             <Col span={13}>
                 <ButtonInputSearch
@@ -33,25 +53,28 @@ function HeaderComponent() {
                     textButton="Tìm kiếm"
                 />
             </Col>
-            <Col span={6} style={{display: 'flex', gap: '20px'}}>
+            <Col span={6} style={{display: 'flex', gap: '30px', justifyContent: 'flex-end' }}>
                 <WrapperHeaderAccount>
-                    <UserDeleteOutlined style={{fontSize: '30px'}}/>
+                    <UserOutlined style={{fontSize: '30px'}}/>
                     {
-                        user?.email ? (<div style={{cursor: "pointer"}}>{user?.email}</div>) :
+                        user?.email ? 
                         (
-                            <div onClick={handleNavigateLogin} style={{cursor: "pointer"}}>
-                                <span>Đăng nhâp/ Đăng ký</span>
-                                <div>
-                                    <span>Tài khoản</span>
-                                    <CaretDownOutlined />
-                                </div>
+                            <Popover content={content} trigger="hover">
+                                <div style={{cursor: "pointer"}}>{user?.email}</div>
+                            </Popover>
+                            
+                        
+                        ) :
+                        (
+                            <div onClick={handleNavigateLogin} style={{display: 'flex',flexDirection: 'column' ,cursor: "pointer"}}>
+                                <span>Tài khoản</span>
                             </div>
                         )
                     }
                     
                 </WrapperHeaderAccount>
                 <WrapperHeaderAccount>
-                    <Badge count={4} size="small" >
+                    <Badge count={1} size="small" >
                         <ShoppingCartOutlined style={{ fontSize: '30px',color: '#fff'}}/>
                     </Badge>
                     <span>Giỏ hàng</span>

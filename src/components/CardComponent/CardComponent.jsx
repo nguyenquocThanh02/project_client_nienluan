@@ -1,5 +1,4 @@
 import React from "react";
-import { Card } from 'antd';
 import { 
     WrapperCardStyle,
     StyleNameProduct,
@@ -9,7 +8,9 @@ import {
 } from "./style";
 import { StarFilled } from "@ant-design/icons";
 
-function CardComponent() {
+function CardComponent(props) {
+    const { countInStock, description, image, name, price, rating, type, selled, discount, id}= props;
+        
     return ( 
         <div>
             <WrapperCardStyle
@@ -17,19 +18,20 @@ function CardComponent() {
                 headStyle={{width: '200px', height: '200px'}}
                 style={{ width: 200 }}
                 bodyStyle={{padding: '10px'}}
-                cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
+                cover={<img alt="example" src={image} />}
             >
-                <StyleNameProduct>Iphone</StyleNameProduct>
+                <StyleNameProduct>{name}</StyleNameProduct>
                 <WrapperReportText>
                     <span>
-                        <span>5.55</span>
+                        <span>{rating}</span>
                         <StarFilled style={{fontSize: '10px', color: 'yellow'}}/>
                     </span>
-                    <span> | Đã bán 1000+</span>
+                    <span> | Đã bán {selled || 1000}+</span>
                 </WrapperReportText>
-                <WrapperPriceText>1.000.000d
+                <WrapperPriceText>
+                    {price}đ
                     <WrapperDiscountText>
-                        -5%
+                        -{discount}%
                     </WrapperDiscountText>
                 </WrapperPriceText>
             </WrapperCardStyle>

@@ -13,23 +13,14 @@ export const WrapperTextHeader= styled.span`
     text-align: left;
     cursor: pointer;
     &:hover{
-        color: #fff;
+        color: #ccc;
     }
 `
-export const WrapperTextContact= styled.span`
-    font-size: 14px;
-    color: #fff;
-    cursor: pointer;
-    &:hover{
-        color: #fff;
-    }
-`
-
 export const WrapperHeaderAccount= styled.div`
     display: flex;
-    align-items: center;
     color: #fff;
-    font-size: 14px;
+    font-size: 15px;
+    font-weight: bold;
     gap: 10px;
 `
 export const WrapperHeaderPop= styled.div`

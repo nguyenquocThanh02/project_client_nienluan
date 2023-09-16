@@ -12,7 +12,8 @@ export const StyleNameProduct= styled.div`
     font-weight: 400;
     font-size: 16px;
     line-height: 16px;
-    color: #000;
+    color: #494747;
+    margin-bottom: 2px;
 `
 export const WrapperReportText= styled.div`
     font-size: 11px;
@@ -24,7 +25,7 @@ export const WrapperReportText= styled.div`
 `
 export const WrapperPriceText= styled.div`
     font-weight: 500;
-    font-size: 16px;
+    font-size: 18px;
     color: red;
 `
 export const WrapperDiscountText= styled.span`

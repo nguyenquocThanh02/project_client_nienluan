@@ -13,7 +13,8 @@ export const WrapperProduct= styled.div`
     gap: 20px;
     justify-content: center;
     flex-wrap: wrap;
-    margin-top: 20px;
+    margin-top: 40px;
+    margin-bottom: 20px;
 `
 
 

@@ -63,7 +63,7 @@ function SignUpPage() {
                         <h3>Đăng ký</h3>
                         <Form.Item
                             name="email"
-                            rules={[{ required: true,type: "email", message: 'Email incorrect'}]}
+                            rules={[{ required: true,type: "email", message: 'Không đúng định dạng email'}]}
                         >
                             <Input placeholder="abc@gmail.com" value={email} onChange={handleOnchangeEmail}/>
                         </Form.Item>

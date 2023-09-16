@@ -2,7 +2,7 @@ import React from "react";
 
 function TypeProduct({name}) {
     return ( 
-        <div>
+        <div style={{color: '#fff'}}>
             {name}
         </div>
      );
