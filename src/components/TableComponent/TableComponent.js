@@ -12,8 +12,8 @@ function TableComponent(props) {
     const start = () => {
         setLoading(true);
         setTimeout(() => {
-        setSelectedRowKeys([]);
-        setLoading(false);
+            setSelectedRowKeys([]);
+            setLoading(false);
         }, 1000);
     };
     const onSelectChange = (newSelectedRowKeys) => {
@@ -33,7 +33,6 @@ function TableComponent(props) {
                 marginBottom: 16,
                 }}
             >   
-                <p>Danh sách tất cả sản phẩm</p>
                 <Button type="primary" onClick={start} disabled={!hasSelected} loading={loading}>
                     Bỏ chọn
                 </Button>
@@ -45,7 +44,7 @@ function TableComponent(props) {
                     {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
                 </span>
             </div>
-            <Table rowSelection={rowSelection} columns={columns} dataSource={data} />
+            <Table rowSelection={rowSelection} columns={columns} dataSource={data} {...props}/>
         </Loading>
     );
 }

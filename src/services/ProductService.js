@@ -9,3 +9,18 @@ export const CreateProduct= async (data) => {
     const res= await axios.post('http://localhost:3001/api/product/create',data)
     return res.data
 }
+
+export const getDetailsProduct= async (id) => {
+    const res= await axios.get(`http://localhost:3001/api/product/get-details/${id}`)
+    return res.data
+}
+
+export const updateProduct= async (id,data) => {
+    const res= await axios.put(`http://localhost:3001/api/product/update/${id}`, data)
+    return res.data
+}
+
+export const deleteProduct= async (id) => {
+    const res= await axios.delete(`http://localhost:3001/api/product/delete/${id}`)
+    return res.data
+}

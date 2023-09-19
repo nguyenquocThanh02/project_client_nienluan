@@ -31,3 +31,7 @@ export const logoutUser= async () => {
     return res.data
 }
 
+export const getAllUser= async () => {
+    const res= await axiosJWT.get(`http://localhost:3001/api/user/getAll`)
+    return res.data
+}

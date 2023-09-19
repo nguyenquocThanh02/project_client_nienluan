@@ -1,30 +1,13 @@
 import React, { useState } from 'react';
 import { Button, Table, Modal } from 'antd';
-import {PlusOutlined} from '@ant-design/icons'
+import {PlusOutlined} from '@ant-design/icons';
+import {useQuery} from "@tanstack/react-query";
+import * as UserService from '../../services/UserService';
+
+import TableComponent from '../TableComponent/TableComponent';
+
 function AdminUserComponent() {
-    const columns = [
-        {
-          title: 'Name',
-          dataIndex: 'name',
-        },
-        {
-          title: 'Age',
-          dataIndex: 'age',
-        },
-        {
-          title: 'Address',
-          dataIndex: 'address',
-        },
-    ];
-    const data = [];
-    for (let i = 0; i < 46; i++) {
-        data.push({
-            key: i,
-            name: `Edward King ${i}`,
-            age: 32,
-            address: `London, Park Lane no. ${i}`,
-        });
-    }
+    const [rowSelected, setRowSelected] = useState('');
 
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
         const [loading, setLoading] = useState(false);
@@ -57,6 +40,50 @@ function AdminUserComponent() {
         const handleCancel = () => {
             setIsModalOpen(false);
         };
+
+        // 
+        const fetchAllUsers = async () => {
+            const res= await UserService.getAllUser();
+            return res;
+        }
+        const queryUser = useQuery({ queryKey: ['users'], queryFn: fetchAllUsers })
+        const { isLoading: isLoadingAllUser, data: users } = queryUser
+
+        const renderPerform= () => {
+            return (
+                <div style={{display: 'flex', color: 'blue', gap: '2px'}}>
+                    <span style={{cursor: 'pointer'}} >Sửa</span>
+                    <span>/</span>
+                    <span style={{cursor: 'pointer'}} >Xoá</span>
+                </div>
+            )
+        }
+     const columns = [
+        {
+          title: 'Tên tài khoản',
+          dataIndex: 'name',
+          sorter: (a,b)=> a.name.length - b.name.length
+        },
+        {
+          title: 'email',
+          dataIndex: 'email',
+          sorter: (a,b)=> a.email.length - b.email.length
+        },
+        {
+          title: 'phone',
+          dataIndex: 'phone',
+          sorter: (a,b)=> a.phone - b.phone
+        },
+        {
+            title: 'Thực hiện',
+            dataIndex: '',
+            render: renderPerform
+        },
+    ];
+    const dataTable = users?.data?.map(user => {
+        return {...user, key: user._id}
+    })
+
     return ( 
         <div>
             <div style={{display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -72,24 +99,14 @@ function AdminUserComponent() {
                 </Modal>
             </div>
             <hr/>
-            <div
-                style={{
-                marginBottom: 16,
-                }}
-            >   
-                <p>Danh sách các tài khoản</p>
-                <Button type="primary" onClick={start} disabled={!hasSelected} loading={loading}>
-                    Reload
-                </Button>
-                <span
-                style={{
-                    marginLeft: 8,
-                }}
-                >
-                    {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
-                </span>
-            </div>
-            <Table rowSelection={rowSelection} columns={columns} dataSource={data} />
+            <p>Danh sách người dùng</p>
+            <TableComponent columns={columns} isLoading={isLoadingAllUser} data={dataTable} onRow={(record, i)=>{
+                return {
+                    onClick: e=>{
+                        setRowSelected(record._id);
+                    }
+                }
+           }}/>
         </div>
      );
 }
