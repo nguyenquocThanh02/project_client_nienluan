@@ -24,12 +24,12 @@ export const routes= [
         isShowHeader: false,
     },
     {
-        path: '/detail-product',
+        path: '/detail-product/:id',
         page: DetailProductPage,
         isShowHeader: true,
     },
     {
-        path: '/products',
+        path: '/product/:type',
         page: ProductsPage,
         isShowHeader: true,
     },
@@ -39,7 +39,7 @@ export const routes= [
         isShowHeader: true,
     },
     {
-        path: '/type',
+        path: '/products/:type',
         page: TypeProductPage,
         isShowHeader: true,
     },

@@ -19,8 +19,8 @@ function AdminPage() {
         };
       }
       const items = [
-        getItem('Quản lý người dùng', 'sub1', <UserOutlined />),
-        getItem('Quản lý sản phẩm', 'sub2', <ShoppingCartOutlined />),
+        getItem('Tài khoản người dùng', 'sub1', <UserOutlined />),
+        getItem('Sản phẩm', 'sub2', <ShoppingCartOutlined />),
         getItem('Trợ giúp', 'sub3', <QuestionCircleOutlined />),
       ];
       const onClick = (e) => {
@@ -45,8 +45,6 @@ function AdminPage() {
                     width: 220,
                     boxShadow: '0px 1px 1px #ccc',
                     height: '145vh',
-                    fontSize: '16px'
-  
                 }}
                 defaultSelectedKeys={['1']}
                 defaultOpenKeys={['sub1']}

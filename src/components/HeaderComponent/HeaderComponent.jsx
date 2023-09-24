@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {Badge, Col, Input as Search, Popover} from 'antd';
 import {
     WrapperHeader, WrapperTextHeader,
@@ -6,7 +6,7 @@ import {
     WrapperTextContact
 } from './style';
 import {
-    UserOutlined,
+    UserOutlined,HomeOutlined,
     ShoppingCartOutlined, WechatOutlined
   } from '@ant-design/icons';
 import ButtonInputSearch from "../ButtonInputSearch/ButtonInputSearch";
@@ -14,15 +14,18 @@ import { useNavigate } from "react-router-dom";
 import {useDispatch, useSelector} from 'react-redux';
 import * as UserService from '../../services/UserService';
 import { resetUser } from "../../redux/slides/userSlide";
+import { searchProduct } from '../../redux/slides/productSlide';
 
 function HeaderComponent() {
+    const [search,setSearch] = useState('')
+
     const navigate= useNavigate()
     const user= useSelector((state)=>state.user)
+    const order= useSelector((state)=>state.order)
     const dispatch= useDispatch();
     const handleNavigateLogin = ()=>{
         navigate('/sign-in')
     }
-    // console.log('user', user)
     const handleLogout = async ()=>{
         await UserService.logoutUser();
         dispatch(resetUser())
@@ -36,31 +39,50 @@ function HeaderComponent() {
           <WrapperHeaderPop onClick={handleLogout}>Đăng xuất</WrapperHeaderPop>
         </div>
       );
+
+    // Order page
+    const handleMoveOrder = () => {
+        if(user?.email){
+            navigate('/order');
+        }else{
+            alert('Bạn phải đăng nhập để vào giỏ hàng')
+            navigate('/sign-in');
+        }
+    }
+
+    // Handle when search product
+    const onSearch = (e) => {
+        setSearch(e.target.value)
+        dispatch(searchProduct(e.target.value))
+    }
     return ( 
         <div>
            <WrapperHeader gutter={16}>
-            <Col span={5} style={{gap: '30px', display: 'flex', alignItems: 'center'}}>
-                <WrapperTextHeader onClick={()=>navigate('/')}>LOGO</WrapperTextHeader>
+            <Col span={6} style={{gap: '30px', display: 'flex', alignItems: 'center'}}>
+               <WrapperHeaderAccount onClick={()=>navigate('/')}>
+                    <HomeOutlined style={{fontSize: '26px'}} />
+                    Home
+               </WrapperHeaderAccount>
                 <WrapperHeaderAccount>
                     <WechatOutlined style={{fontSize: '30px'}}/>
                     Liên hệ
                 </WrapperHeaderAccount>
             </Col>
-            <Col span={13}>
+            <Col span={12} style={{padding: '0  20px'}}>
                 <ButtonInputSearch
-                    placeholder="input search text"
-                    size="large"
-                    textButton="Tìm kiếm"
+                    placeholder="Nhập tên sản phẩm để tìm..."
+                    size="medium"
+                    onChange={onSearch}
                 />
             </Col>
             <Col span={6} style={{display: 'flex', gap: '30px', justifyContent: 'flex-end' }}>
                 <WrapperHeaderAccount>
-                    <UserOutlined style={{fontSize: '30px'}}/>
+                    <UserOutlined style={{fontSize: '27px'}}/>
                     {
                         user?.email ? 
                         (
                             <Popover content={content} trigger="hover">
-                                <div style={{cursor: "pointer"}}>{user?.email}</div>
+                                <div style={{cursor: "pointer"}}>{user?.name || user?.email}</div>
                             </Popover>
                             
                         
@@ -73,9 +95,9 @@ function HeaderComponent() {
                     }
                     
                 </WrapperHeaderAccount>
-                <WrapperHeaderAccount>
-                    <Badge count={1} size="small" >
-                        <ShoppingCartOutlined style={{ fontSize: '30px',color: '#fff'}}/>
+                <WrapperHeaderAccount onClick={handleMoveOrder}>
+                    <Badge count={order?.orderItems?.length} size="small" >
+                        <ShoppingCartOutlined style={{ fontSize: '27px',color: '#fff'}}/>
                     </Badge>
                     <span>Giỏ hàng</span>
                 </WrapperHeaderAccount>

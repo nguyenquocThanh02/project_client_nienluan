@@ -29,7 +29,7 @@ function HeaderAdminComponent() {
         <div>
            <WrapperHeader gutter={16}>
             <Col span={12}>
-                <WrapperTextHeader onClick={() => navigate('/')}>Logo</WrapperTextHeader>
+                <WrapperTextHeader onClick={() => navigate('/')}>Home</WrapperTextHeader>
             </Col>
             <Col span={12} style={{display: 'flex', gap: '20px', justifyContent: 'flex-end'}}>
                 <WrapperHeaderAccount onClick={handleLogout}>

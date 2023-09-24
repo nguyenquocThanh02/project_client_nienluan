@@ -1,10 +1,11 @@
 import React from "react";
 import {Button} from "antd";
 
-function ButtonComponent({textBtn, typeBtn, styleBtn, htmlTypeBtn}) {
+function ButtonComponent(props) {
+    const {textBtn, typeBtn, styleBtn, htmlTypeBtn, size}= props;
     return ( 
         <div>
-            <Button type={typeBtn} style={{...styleBtn}} htmlType={htmlTypeBtn}>
+            <Button type={typeBtn} style={{...styleBtn}} htmlType={htmlTypeBtn} size={size} {...props}>
                 {textBtn}
             </Button>
         </div>

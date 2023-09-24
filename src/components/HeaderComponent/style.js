@@ -31,6 +31,10 @@ export const WrapperHeaderAccount= styled.div`
     color: #fff;
     font-size: 14px;
     gap: 10px;
+    &:hover{
+        cursor: pointer;
+        opacity: 0.8;
+    }
 `
 export const WrapperHeaderPop= styled.div`
     cursor: pointer;

@@ -14,6 +14,10 @@ export const StyleNameProduct= styled.div`
     line-height: 16px;
     color: #494747;
     margin-bottom: 2px;
+    white-space: nowrap; /* Ngăn text xuống hàng */
+    overflow: hidden; /* Ẩn phần vượt quá kích thước */
+    text-overflow: ellipsis; /* Hiển thị dấu ... khi văn bản bị cắt */
+    padding-bottom: 3px;
 `
 export const WrapperReportText= styled.div`
     font-size: 11px;
@@ -21,6 +25,7 @@ export const WrapperReportText= styled.div`
     display: flex;
     align-items: center;
     margin: 5px 0;
+    gap: 6px;
 
 `
 export const WrapperPriceText= styled.div`

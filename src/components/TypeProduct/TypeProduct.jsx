@@ -1,10 +1,16 @@
 import React from "react";
-
+import {WrapperTypeProduct} from './style';
+import { useNavigate } from "react-router-dom";
 function TypeProduct({name}) {
+    const navigate= useNavigate();
+
+    const handleNavigateTypeProduct= (type)=>{
+        navigate(`/products/${type}`, {state: type})
+    }
     return ( 
-        <div style={{color: '#fff'}}>
+        <WrapperTypeProduct onClick={()=>handleNavigateTypeProduct(name)}>
             {name}
-        </div>
+        </WrapperTypeProduct>
      );
 }
 
