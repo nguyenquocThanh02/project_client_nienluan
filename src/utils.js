@@ -14,3 +14,11 @@ export const getBase64 = (file) =>
         reader.onload = () => resolve(reader.result);
         reader.onerror = (error) => reject(error);
     });
+
+export const convertMoney = (price) => {
+    try {
+        return price?.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
+    } catch (error) {
+        return null
+    }
+}

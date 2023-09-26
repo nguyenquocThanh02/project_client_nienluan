@@ -4,23 +4,27 @@ export const WrapperBodyPrice= styled.div`
     flex-direction: column;
     background-color: #fff;
     border-radius: 8px;
-    padding: 0px 0 10px;
-    align-items: center;
+    padding: 0px 16px 10px;
 `
 export const WrapperGroupPrice= styled.div`
     display: flex;
-    padding: 0px 18px;
+    padding: 0px 12px;
     justify-content: space-between;
-    line-height: 0.6;
-    gap: 24px;
+    line-height: 0.1;
 `
 export const WrapperGroupSumPrice= styled.div`
     display: flex;
     padding: 0px 18px;
     justify-content: space-between;
-    line-height: 0.6;
-    // align-items: center;
+    line-height: 0;
+    align-items: center;
     gap: 24px;
-    border-top: 0.5px solid #eaf0f4;
-    padding: 14px ;
+`
+export const WrapperName= styled.div`
+    max-width: 200px;
+    color: blue;
+    padding: 5px 0;
+    white-space: nowrap; /* Ngăn text xuống hàng */
+    overflow: hidden; /* Ẩn phần vượt quá kích thước */
+    text-overflow: ellipsis; /* Hiển thị dấu ... khi văn bản bị cắt */
 `

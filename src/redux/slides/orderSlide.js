@@ -79,10 +79,10 @@ export const orderSlide = createSlice({
 
     },
     selectedOrder: (state, action) => {
-      const {listChecked} = action.payload
+      const {newSelectedRowKeys} = action.payload
       const orderSelected = []
       state.orderItems.forEach((order) => {
-        if(listChecked.includes(order.product)){
+        if(newSelectedRowKeys.includes(order.product)){
           orderSelected.push(order)
         };
       });

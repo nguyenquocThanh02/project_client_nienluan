@@ -4,11 +4,15 @@ import TableComponent from "../../components/TableComponent/TableComponent";
 import {useQuery} from "@tanstack/react-query";
 import * as UserService from '../../services/UserService';
 import { useSelector, useDispatch } from "react-redux";
-import {decreaseAmount, increaseAmount, removeOrderProduct, removeAllOrderProduct} from '../../redux/slides/orderSlide';
+import {decreaseAmount, selectedOrder,
+     increaseAmount, removeOrderProduct,
+      removeAllOrderProduct
+} from '../../redux/slides/orderSlide';
 
 import {DownCircleOutlined, UpCircleOutlined, DeleteOutlined} from '@ant-design/icons';
 import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
-import {WrapperGroupPrice, WrapperBodyPrice, WrapperGroupSumPrice} from "./style";
+import {WrapperGroupPrice, WrapperBodyPrice, WrapperGroupSumPrice, WrapperName} from "./style";
+import {convertMoney} from "../../utils"; 
 
 function OrderPage() {
     const [loading, setLoading] = useState(false);
@@ -16,7 +20,7 @@ function OrderPage() {
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const order= useSelector((state) => state.order);
     const dispatch= useDispatch();
-
+    let sumPrice=0;
     // const start = () => {
     //     setLoading(true);
     //     // ajax request after empty completing
@@ -27,6 +31,7 @@ function OrderPage() {
     // };
     const onSelectChange = (newSelectedRowKeys) => {
         setSelectedRowKeys(newSelectedRowKeys);
+        dispatch(selectedOrder({newSelectedRowKeys}))
     };
 
 
@@ -64,7 +69,7 @@ function OrderPage() {
         const amounts= record.amount
         return (
             <div>
-                {(price*amounts).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
+                {convertMoney(price*amounts)}
             </div>
         )
     }
@@ -89,7 +94,7 @@ function OrderPage() {
         {
             title: 'Đơn giá',
             dataIndex: 'price',
-            render: (price) => <div>{price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</div>
+            render: (price) => <div>{convertMoney(price)}</div>
         },
         {
             title: 'Số lượng',
@@ -129,32 +134,39 @@ function OrderPage() {
                     }
             }}/>
           </Col>
-          <Col span={6} style={{paddingTop: '35px', }}>
+          <Col span={6} style={{padding: '35px 0', }}>
             <WrapperBodyPrice >
-                <h3>Thanh toán</h3>
-                <div>
-                    <WrapperGroupPrice>
+                <h3 style={{lineHeight: '0.2',  margin: '16px auto 10px'}}>Thanh toán</h3>
+                {order?.orderItemsSlected.map((item, index) => {
+                    const total= (item?.amount)*(item?.price)*(110- item?.discount)/100;
+                    sumPrice+=total;
+                    return (
+                    <div key={index}>
+                        <WrapperName>{item?.name}</WrapperName>
+                        <WrapperGroupPrice>
                         <p>Giá bán: </p>
-                        <p>100.000 đ</p>
-                    </WrapperGroupPrice>
-                    <WrapperGroupPrice>
+                        <p>{convertMoney(item?.price)} x {item?.amount}</p>
+                        </WrapperGroupPrice>
+                        <WrapperGroupPrice>
                         <p>Giảm giá: </p>
-                        <p>- 100.000 đ</p>
-                    </WrapperGroupPrice>
-                    <WrapperGroupPrice>
-                        <p>Thuế: </p>
-                        <p>100.000 đ</p>
-                    </WrapperGroupPrice>
-                    <WrapperGroupPrice>
+                        <p>- {convertMoney((item?.price)*(item?.discount)/100)}</p>
+                        </WrapperGroupPrice>
+                        <WrapperGroupPrice>
                         <p>Phí vận chuyển: </p>
-                        <p>100.000.000 đ</p>
-                    </WrapperGroupPrice>
-                    <WrapperGroupSumPrice>
+                        <p>{convertMoney(item?.price*10/100)}</p>
+                        </WrapperGroupPrice>
+                        <WrapperGroupPrice>
                         <p>Tổng: </p>
-                        <p style={{color: 'red', fontSize: '20px'}}>100.000.000 đ</p>
-                    </WrapperGroupSumPrice>
-                </div>
-                <ButtonComponent textBtn="Đặt hàng" typeBtn="primary" size="large"/>
+                        <p style={{color: 'red'}}>{convertMoney(total)}</p>
+                        </WrapperGroupPrice>
+                        <p style={{borderTop: '1px solid #ccc', lineHeight: '0'}}></p>
+                    </div>)
+                })}
+                <WrapperGroupSumPrice>
+                    <p>Tất cả: </p>
+                    <p style={{color: 'red', fontSize: '20px'}}>{convertMoney(sumPrice)}</p>
+                </WrapperGroupSumPrice>
+                <ButtonComponent textBtn="Đặt hàng" typeBtn="primary" size="medium" styleBtn={{width: '100%'}}/>
             </WrapperBodyPrice>
           </Col>
         </Row>
