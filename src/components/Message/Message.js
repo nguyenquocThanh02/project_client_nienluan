@@ -1,14 +1,14 @@
 import { message } from "antd";
 
-const success = (mes = 'Success') => {
+const success = (mes = 'Thành công') => {
     message.success(mes);
 };
 
-const error = (mes = 'Error') => {
+const error = (mes = 'Không thành công!') => {
     message.error(mes);
 };
 
-const warning = (mes = 'Warning') => {
+const warning = (mes = 'Cảnh báo nguy hiểm') => {
     message.warning(mes);
 };
 

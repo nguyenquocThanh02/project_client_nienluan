@@ -9,12 +9,15 @@ import * as UserService from '../../services/UserService';
 import { useMutationHooks } from "../../hooks/useMutationHook";
 import Loading from "../../components/LoadingComponent/Loading";
 import * as message from '../../components/Message/Message';
-
+import jwt_decode from 'jwt-decode';
+import {useDispatch} from 'react-redux';
+import { updateUser } from "../../redux/slides/userSlide";
 function SignInPage() {
     
     const navigate= useNavigate();
     const [email, setEmail]= useState('');
     const [password, setPassword]= useState('');
+    const dispatch = useDispatch();
 
     const handleOnchangeEmail= (e) => {
         setEmail(e.target.value);
@@ -39,14 +42,22 @@ function SignInPage() {
         } else if(data?.status === 'OK'){
           message.success();
           navigate('/')
+          localStorage.setItem('access_token', JSON.stringify(data?.access_token))
+          if(data?.access_token){
+            const decoded = jwt_decode(data?.access_token)
+            if(decoded?.id){
+                handleGetDatailsUser(decoded?.id, data?.access_token)
+            }
+          }
         }
       }, [data?.status])
     
-
+    const handleGetDatailsUser = async (id, token) => {
+        const res= await UserService.getDetailsUser(id, token)
+        dispatch(updateUser({...res?.data, access_token: token}));
+    }
     const handleHienthi= ()=>{
-        console.log(email, password)
         mutation.mutate({email, password})
-        console.log(mutation)
     }
     
     return ( 

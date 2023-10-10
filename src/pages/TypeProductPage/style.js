@@ -2,9 +2,10 @@ import { styled } from "styled-components";
 
 export const WrapperProduct= styled.div`
     display: flex;
-    gap: 20px;
+    gap: 25px;
     justify-content: center;
     flex-wrap: wrap;
+    margin-left: 30px;
 `
 export const WrapperNavBar= styled.div`
     background: #fff;
