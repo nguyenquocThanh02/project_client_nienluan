@@ -6,7 +6,7 @@ export const CreateService= async (data) => {
 }
 
 export const GetOrderOfUser= async (id) => {
-    const res= await axios.get(`http://localhost:3001/api/order/get-ordered/${id}`)
+    const res= await axios.get(`http://localhost:3001/api/order/get-all-ordered-of-user/${id}`)
     return res.data
 }
 
