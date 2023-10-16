@@ -93,7 +93,7 @@ function OrderPage() {
     const renderDelete= (record) => {
         return (
             <div>
-                <DeleteOutlined onClick={()=>handleRemoveOrderProduct(record?.product)} style={{curdor: 'pointer'}}/>
+                <DeleteOutlined onClick={()=>handleRemoveOrderProduct(record?.product)} style={{cursor: 'pointer'}}/>
             </div>
         )
     }

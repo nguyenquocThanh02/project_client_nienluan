@@ -17,8 +17,11 @@ export const getBase64 = (file) =>
 
 export const convertMoney = (price) => {
     try {
-        return price?.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
+        // return price?.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
+        const roundedPrice = parseInt(price)
+        return  roundedPrice?.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
     } catch (error) {
         return null
     }
 }
+

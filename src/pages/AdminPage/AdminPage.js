@@ -20,7 +20,7 @@ function AdminPage() {
         };
       }
       const items = [
-        getItem('Tài khoản người dùng', 'sub1', <UserOutlined />),
+        getItem('Tài khoản', 'sub1', <UserOutlined />),
         getItem('Sản phẩm', 'sub2', <BarcodeOutlined />),
         getItem('Đơn hàng', 'sub3', <ShoppingCartOutlined />),
         getItem('Trợ giúp', 'sub4', <QuestionCircleOutlined />),

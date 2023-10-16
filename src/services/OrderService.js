@@ -9,4 +9,16 @@ export const GetOrderOfUser= async (id) => {
     const res= await axios.get(`http://localhost:3001/api/order/get-all-ordered-of-user/${id}`)
     return res.data
 }
+export const CancelOrder= async (id, orderItems, userId) => {
+    const data = {orderItems, orderId: id}
+    const res= await axios.delete(`http://localhost:3001/api/order/cancel-order/${userId}`,{data})
+    return res.data
+}
+
+export const GetAllOrder= async (id) => {
+    const res= await axios.get(`http://localhost:3001/api/order/get-all-ordered`)
+    return res.data
+}
+
+
 

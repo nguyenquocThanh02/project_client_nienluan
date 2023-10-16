@@ -36,6 +36,6 @@ export const logoutUser= async () => {
 }
 
 export const getAllUser= async () => {
-    const res= await axiosJWT.get(`http://localhost:3001/api/user/getAll`)
+    const res= await axios.get(`http://localhost:3001/api/user/get-all`)
     return res.data
 }
