@@ -39,12 +39,14 @@ function HeaderComponent() {
         navigate('/get-ordered')
     }
 
-
-
+    // Phân quyền trang admin, seller, user
     const content = (
         <div>
           {
             user?.isAdmin && <WrapperHeaderPop onClick={()=> navigate('/system/admin')}>Trang quản trị</WrapperHeaderPop>
+          }
+          {
+            user?.isSeller && <WrapperHeaderPop onClick={()=> navigate('/system/seller')}>Trang bán hàng</WrapperHeaderPop>
           }
           <WrapperHeaderPop onClick={handleGetOrderOfUser}>Đơn hàng của tôi</WrapperHeaderPop>
           <WrapperHeaderPop>Xem hồ sơ</WrapperHeaderPop>

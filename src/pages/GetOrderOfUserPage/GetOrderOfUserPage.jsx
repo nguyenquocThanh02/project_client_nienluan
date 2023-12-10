@@ -85,8 +85,24 @@ function OrderPage() {
             dataIndex: 'totalPrice'
         },
         {
-            title: 'Trạng thái đơn hàng',
-            dataIndex: ''
+            title: 'Trạng thái đơn',
+            dataIndex: 'isDelivered',
+            render: (isDelivered) => (
+                <span>
+                    {(() => {
+                    switch (isDelivered) {
+                        case 0:
+                        return 'Đang xử lý';
+                        case 1:
+                        return 'Đang giao';
+                        case 2:
+                        return 'Đã giao';
+                        default:
+                        return 'Trạng thái không xác định';
+                    }
+                    })()}
+                </span>
+            ),
         },
         {
             title: 'Thực hiện',

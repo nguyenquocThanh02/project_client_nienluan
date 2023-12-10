@@ -5,9 +5,9 @@ function DetailProductPage() {
     const {id}= useParams();
     return ( 
         <div style={{background: '#eaf0f4', padding: '0 60px', minHeight: '100vh'}}>
-            <span>Trang chủ / Chi tiết sản phẩm</span>
+            <div></div>
             <ProductDetailComponent idProduct={id}/>
-            <span>Comment component</span>
+            <span></span>
         </div>
     );
 }

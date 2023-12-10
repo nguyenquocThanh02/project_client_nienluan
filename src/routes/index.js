@@ -7,8 +7,11 @@ import SignInPage from "../pages/SignInPage/SignInPage";
 import SignUpPage from "../pages/SignUpPage/SignUpPage";
 import DetailProductPage from "../pages/DetailProductPage/DetailProductPage";
 import AdminPage from "../pages/AdminPage/AdminPage";
+import SellerPage from "../pages/SellerPage/SellerPage";
 import GetOrderOfUserPage from "../pages/GetOrderOfUserPage/GetOrderOfUserPage";
 
+
+// Định tuyến 
 export const routes= [
     {
         path: '/',
@@ -53,6 +56,12 @@ export const routes= [
     {
         path: '/system/admin',
         page: AdminPage,
+        isShowHeader: false,
+        isPrivated: true
+    },
+    {
+        path: '/system/seller',
+        page: SellerPage,
         isShowHeader: false,
         isPrivated: true
     },

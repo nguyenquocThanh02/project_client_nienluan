@@ -33,7 +33,7 @@ function CardComponent(props) {
                         <span>{rating}</span>
                         <StarFilled style={{fontSize: '12px', color: 'yellow', marginLeft: '1px'}}/>
                     </span>
-                    <span>Đã bán {selled || 1000}+</span>
+                    <span>Đã bán {selled || 0}+</span>
                 </WrapperReportText>
                 <WrapperPriceText>
                     {price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}

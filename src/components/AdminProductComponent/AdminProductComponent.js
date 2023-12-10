@@ -90,7 +90,6 @@ function AdminProductComponent() {
     const { data: dataUpdate, isLoading: isLoadingUpdate } = mutationUpdate
     const { data: dataDelete, isLoading: isLoadingDelete } = mutationDelete
     
-
     useEffect(() => {
         if (data?.status === 'ERR') {
             message.error()
@@ -99,25 +98,6 @@ function AdminProductComponent() {
             handleCancel();
         }
     }, [data?.status])
-
-    // Khi thanh cong của update
-    useEffect(() => {
-        if (dataUpdate?.reset?.status === 'ERR') {
-            message.error()
-        } else if(dataUpdate?.reset?.status === 'success'){
-            message.success()
-        }
-    }, [dataUpdate?.reset?.status])
-
-    // Khi thanh cong của delete
-    // useEffect(() => {
-    //     if (dataDelete?.reset?.status === 'ERR') {
-    //         message.error()
-    //     } else if(dataDelete?.reset?.status === 'success'){
-    //         message.success()
-    //     }
-    // }, [dataDelete?.reset?.status])
-
 
     const hanleCreate= ()=>{
         const params = {
@@ -131,7 +111,6 @@ function AdminProductComponent() {
             discount: stateProduct.discount
           }
         mutation.mutate(params)
-        // console.log('mutation', mutation)
     }
 
     const hanleUpdate= ()=>{
@@ -146,9 +125,7 @@ function AdminProductComponent() {
             discount: stateDetailsProduct.discount
           }
         mutationUpdate.mutate({id: rowSelected,...params})
-        // console.log('dataUpdate', dataUpdate);
-        // console.log('isLoadingUpdate', isLoadingUpdate)
-        // console.log('mutationUpdate', mutationUpdate)
+        message.success('Cập nhật thành công')
     }
 
     const handleOnchangeAvatar = async ({ fileList }) => {
@@ -180,6 +157,8 @@ function AdminProductComponent() {
     // const {isLoading: isLoadingAllProduct, data: products} = useQuery(['product'], fetchAllProduct, {retry: 3, retryDelay: 1000})
     const queryProduct = useQuery({ queryKey: ['products'], queryFn: fetchAllProduct })
     const { isLoading: isLoadingAllProduct, data: products } = queryProduct
+
+    // Lấy giá trị cũ của sản phẩm và hiển thị lên form
     const fetchGetDetailsProduct = async () => {
         const res= await ProductService.getDetailsProduct(rowSelected);
         setStateDetailsProduct({
@@ -194,7 +173,10 @@ function AdminProductComponent() {
         })
         return res;
     }
+
+
     const handleGetDetail = () => {
+        // console.log(rowSelected)
         if(rowSelected){
             fetchGetDetailsProduct();
         }
@@ -322,7 +304,7 @@ function AdminProductComponent() {
         },
         {
             title: 'Số lượng hàng',
-            dataIndex: 'countInstock',
+            dataIndex: 'countInStock',
             sorter: (a,b)=> a.countInStock - b.countInStock,
              ...getColumnSearchProps('countInStock'),
         },
@@ -355,6 +337,7 @@ function AdminProductComponent() {
     const handleOKDeleteProduct = () => {
         mutationDelete.mutate({id: rowSelected})
         handleCancelDeleteProduct();
+        message.success('Xoá thành công');
     }
 
     return ( 

@@ -1,13 +1,57 @@
 import React, { useState } from 'react';
-import { Button, Table, Modal } from 'antd';
+import { Button, Modal, Form, Input, Checkbox } from 'antd';
 import {PlusOutlined} from '@ant-design/icons';
 import {useQuery} from "@tanstack/react-query";
 import * as UserService from '../../services/UserService';
+import Loading from "../../components/LoadingComponent/Loading";
+import { useMutationHooks } from "../../hooks/useMutationHook";
 
 import TableComponent from '../TableComponent/TableComponent';
 
+const {TextArea} = Input;
+
 function AdminUserComponent() {
     const [rowSelected, setRowSelected] = useState('');
+    const [form] = Form.useForm();
+
+    const inittial = () => ({
+        name: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+        isAdmin: false,
+        isSeller: false
+    })
+    const [stateUser, setStateUser] = useState(inittial());
+
+    const handleOnchange = (e) => {
+        setStateUser({
+            ...stateUser,
+            [e.target.name]: e.target.value
+        })
+    }
+
+    const mutation = useMutationHooks(
+        data => UserService.SignUpUser(data)
+    )
+
+    const {data: dataUser, isLoading: isLoadingCreate}= mutation;
+
+    const hanleCreate= ()=>{
+        const params = {
+            name: stateUser.name,
+            email: stateUser.email,
+            password: stateUser.password,
+            confirmPassword: stateUser.confirmPassword,
+            isAdmin: stateUser.isAdmin === 'true' ? true : false,
+            isSeller: stateUser.isSeller === 'true' ? true : false
+          }
+        
+        mutation.mutate(params)
+        // console.log('mutation', mutation)
+    }
+
+
 
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
         const [loading, setLoading] = useState(false);
@@ -91,11 +135,69 @@ function AdminUserComponent() {
                 <Button type="primary" onClick={showModal}>
                     <PlusOutlined />
                 </Button>
-                <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} 
+                <Modal title="Tài khoản mới" open={isModalOpen} onOk={handleOk} 
                     onCancel={handleCancel}>
-                    <p>Some contents...</p>
-                    <p>Some contents...</p>
-                    <p>Some contents...</p>
+                    <Form
+                        name="basic" labelCol={{span: 6,}}
+                        wrapperCol={{span: 18,}} style={{maxWidth: 600,}}
+                        initialValues={{remember: false,}} autoComplete="off"
+                        form={form}
+                    >
+                        
+                        <Form.Item
+                            label="Tên tài khoản"
+                            name="name"
+                            rules={[{ required: true, message: 'Không được bỏ trống'}]}
+                        >
+                            <Input value={stateUser['name']} onChange={handleOnchange} name="name"/>
+                        </Form.Item>
+                        <Form.Item
+                            label="Email"
+                            name="email"
+                            rules={[{ required: true, message: 'Không được bỏ trống'}]}
+                        >
+                            <Input value={stateUser.email} onChange={handleOnchange} name="email"/>
+                        </Form.Item>
+                        <Form.Item
+                            label="Mật khẩu"
+                            name="password"
+                            rules={[{ required: true, message: 'Phải nhập mật khẩu'}]}
+                        >
+                            <Input value={stateUser.password} onChange={handleOnchange}  name="password"/>
+                        </Form.Item>
+                        <Form.Item
+                            label="Nhập lại mật khẩu"
+                            name="confirmPassword"
+                            rules={[{ required: true, message: 'Không được bỏ trống'}]}
+                        >
+                            <Input value={stateUser.confirmPassword} onChange={handleOnchange} name="confirmPassword" />
+                        </Form.Item>
+                        <Form.Item
+                            label="Tài khoản quản trị"
+                            name="isAdmin"
+                            rules={[{ required: true, message: 'Không được bỏ trống'}]}
+                        >
+                            <Input type="checkbox" value={stateUser.isAdmin} onChange={handleOnchange} name="isAdmin"/>
+
+                        </Form.Item>
+                        <Form.Item 
+                            label="Tài khoản bán hàng"
+                            name="isSeller"
+                            rules={[{ required: true, message: 'Không được bỏ trống'}]}
+                        >
+                            <Input type="checkbox" value={stateUser.isSeller} onChange={handleOnchange} name="isSeller"/>
+                        </Form.Item>
+                        
+                        <Loading isLoading={isLoadingCreate}>
+                            <Form.Item
+                                wrapperCol={{offset: 0,span: 24,}} 
+                            >
+                                <Button type="primary" htmlType="submit" onClick={hanleCreate} style={{width: '100%'}}>
+                                    Tạo tài khoản
+                                </Button>
+                            </Form.Item>
+                        </Loading>
+                    </Form>
                 </Modal>
             </div>
             <hr/>

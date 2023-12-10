@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+// Khởi tạo state ban đầu cho order
 const initialState = {
   orderItems: [],
   orderItemsSlected: [],
@@ -18,6 +19,7 @@ const initialState = {
   isSucessOrder: false,
 }
 
+// Hàm chức năng liên quan giỏ hàng
 export const orderSlide = createSlice({
   name: 'order',
   initialState,

@@ -23,6 +23,7 @@ export const getDetailsUser= async (id, access_token) => {
     })
     return res.data
 }
+
 export const refreshToken= async () => {
     const res= await axios.post(`http://localhost:3001/api/user/refresh-token`, {
         withCredentials: true

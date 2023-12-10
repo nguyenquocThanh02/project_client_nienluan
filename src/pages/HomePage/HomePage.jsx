@@ -46,6 +46,8 @@ function HomePage() {
             </Loading>
             <div style={{padding: '0 60px 20px', background: '#eaf0f4', }}>
                 <SliderComponent arrImages={[slider4, slider3]}/>
+
+                {/* Hiển thị card sản phẩm */}
                 <WrapperProduct>
                 { products?.data?.filter((pro) => {
                     if(searchDebounce === '') {

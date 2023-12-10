@@ -6,6 +6,7 @@ export const WrapperProduct= styled.div`
     justify-content: center;
     flex-wrap: wrap;
     margin-left: 30px;
+    padding-bottom: 20px;
 `
 export const WrapperNavBar= styled.div`
     background: #fff;

@@ -15,6 +15,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {addOrderProduct} from '../../redux/slides/orderSlide';
+import { error, success } from "../Message/Message";
 
 function ProductDetailComponent({idProduct}) {
     const [quanlityProduct, setQuanlityProduct]= useState('1');
@@ -41,6 +42,11 @@ function ProductDetailComponent({idProduct}) {
         return stars;
       };
 
+    const handleBuyNow = () => {
+        handleMoveOrderPage();
+        navigate('/order');
+    }
+
     const handleMoveOrderPage = () => {
         if(!user?.id) {
             alert('Bạn phải đăng nhập mới có thể mua hàng')
@@ -59,8 +65,9 @@ function ProductDetailComponent({idProduct}) {
                         countInstock: data?.data?.countInStock
                     }
                 }))
+                success("Bạn đã thêm vào giỏ hàng thành công!")
             } else {
-                alert('Thêm sản phẩm không thành công. Hãy thử lại!');
+                error('Số lượng sản phẩm không đủ!!!');
             }
         }
     }
@@ -70,24 +77,16 @@ function ProductDetailComponent({idProduct}) {
             <Row>
                 <Col span={11} style={{display: 'flex', flexDirection: 'column', alignItems: 'center', paddingLeft: '20px'}}>
                     <Image src={data?.data?.image} alt="Image product" style={{width: '100%',height: '100%', objectFit: 'cover',minWidth: '360px'}}/>
-                     {/* <Row style={{padding: '10px 0', gap: '5px'}}>
-                        <Col span={4}>
-                            <Image src={data?.data?.image} alt="Image product"/>
-                        </Col>
-                        
-                    </Row> */}
                 </Col>
                 <Col span={13} style={{paddingLeft: '30px'}}>
                     <WrapperStyleNameProduct>{data?.data?.name}</WrapperStyleNameProduct>
                     <div>
                         {renderStars(data?.data?.rating)}
-                        <WrapperStyleTextSell>Đã bán {data?.data?.selled || 1000} +</WrapperStyleTextSell>
+                        <WrapperStyleTextSell>Đã bán {data?.data?.selled || 0} +</WrapperStyleTextSell>
                     </div>
                     <WrapperPriceProduct>{data?.data?.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</WrapperPriceProduct>
                     <WrapperAddressProduct>
-                        <span>Địa chỉ giao hàng:</span>
-                        <span className="address">quận Phong Điền, Cần Thơ</span>
-                        <span className="change-address">Địa chỉ khác</span>
+                        <span>Bạn có thể sửa địa chỉ giao hàng khi đặt</span>
                     </WrapperAddressProduct>
                     <div style={{margin: '10px 0'}}>
                         <span>Còn lại: {data?.data?.countInStock} sản phẩm</span>
@@ -97,7 +96,7 @@ function ProductDetailComponent({idProduct}) {
                         <InputNumber value={quanlityProduct} size="small" min={1} max={data?.data?.countInStock} defaultValue={1} onChange={onChange} style={{width: '50px'}}/>
                     </WrapperQualityProduct>
                     <WrapperBtnBuy>
-                        <ButtonComponent textBtn="Mua ngay" typeBtn="primary" size="large"/>
+                        <ButtonComponent textBtn="Mua ngay" typeBtn="primary" size="large" onClick={handleBuyNow}/>
                         <ButtonComponent textBtn="Thêm vào giỏ hàng" size="large" onClick={handleMoveOrderPage}/>
                     </WrapperBtnBuy>
                 </Col>

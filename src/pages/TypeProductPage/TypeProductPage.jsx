@@ -23,13 +23,13 @@ function TypeProductPage() {
         const res= await ProductService.getAllProductOfType(type)
         return res;
     }
-    console.log('state', state)
+    // console.log('state', state)
     const {isLoading, data: productsType} = useQuery(['product-of-product'], ()=>fetchAllProductOfType(state))
     return ( 
         <Loading isLoading={isLoading}>
             <Row style={{padding: '0 60px', background: '#eaf0f4', paddingTop: '16px', flexWrap: 'nowrap', minHeight: '90vh'}}>
                 <WrapperNavBar span={4}>
-                    <NavBarComponent />
+                    Tất cả sản phẩm
                 </WrapperNavBar>
                 <Col span={20}>
                     <WrapperProduct>

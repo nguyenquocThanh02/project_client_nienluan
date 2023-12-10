@@ -17,6 +17,7 @@ function App() {
   // const user = useSelector((state) => state.user)
   const dispatch = useDispatch();
 
+  // sau khi render component, thực hiện
   useEffect(async () => {
     setIsLoading(true)
     const { storageData, decoded } = await handleDecode()
@@ -26,6 +27,7 @@ function App() {
     setIsLoading(false)
   }, []);
 
+  // lấy giữ liệu từ localStorage và giải mã tooken
   const handleDecode = async () => {
     let storageData = localStorage.getItem('access_token');
     let decoded= {};
@@ -37,6 +39,7 @@ function App() {
     return {decoded, storageData}
   }
 
+  // Kiểm tra tooken hết hạn và cấp lại
   UserService.axiosJWT.interceptors.request.use(async (config) => {
     const currentTime= new Date()
     const {decoded} = await handleDecode();
@@ -50,6 +53,7 @@ function App() {
     return Promise.reject(error);
   });
 
+  // Lấy infor user và đưa lên redux
   const handleGetDatailsUser = async (id, token) => {
     let storageRefreshToken = localStorage.getItem('refresh_token')
     const refreshToken = JSON.parse(storageRefreshToken)
